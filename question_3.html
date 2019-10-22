@@ -5,18 +5,21 @@
 <title>JavaScript Sample</title>
 <script>
 
-var ms = 3000;
+var ms = 2000;
 
-function ayumuChallenge(f, ms){
-    setTimeout(f, ms);
+function ayumuChallenge(f,ms){
+    setTimeout(function(){
+        let now = new Date;
+        f(now);
+    }, ms);
 };
 
-function alertNow(){
-    let now = new Date;
-    alert( now );
+function timeDisplayed(now) {
+    alert(now);
 };
 
-ayumuChallenge(alertNow(), ms);
+ayumuChallenge(timeDisplayed,ms);
+
 
 </script>
 </head>
@@ -24,3 +27,7 @@ ayumuChallenge(alertNow(), ms);
 <!-- 本文 -->
 </body>
 
+3. (1)、(2)の応用＆高階関数の触り（目標:30分）
+    a. 第1引数にFunction、第2引数に待機時間（ms）を受け取るFunction（＝高階関数）を定義する
+        - 第2引数で受け取った待機時間（ms）を setTimeout で待機した後、その時点での最新時刻の Date インスタンスを生成し、第1引数で受け取ったFunctionの第1引数に渡す形で実行する
+    b. (a) を利用し、ページ表示後から3秒後の最新時刻を alert表示する（h:m:sがわかればフォーマット問わないです）
