@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>AC_191031</title>
+</head>
+<body onload="saveDefaultHTML()">
+
+    <p>
+            <button type="button" class="btn btn-primary" id="startcount" onclick="startShowing(); clickCounter()">START</button>
+            <button type="button" class="btn btn-light" id="endcount" onclick="stopShowing();">STOP</button>
+    </p>
+    <p id="SecondPassage">残り5秒</p>
+    <p id="CountPassage">始まるよー</p>
+
+    <!-- ■ 応用編 以下の画面を作ってください。 
+    1. 画面上に「START」ボタンが表示されている S
+    2. (1)のボタンを押すと5秒のタイマーカウントダウンが始まる 
+    3. 「あと●秒」が画面のどこかに表示されている 
+    4. カウントダウン中は(1)のボタンを何度でも押せて、押した回数だけ「●回押したよ」というラベルで表示される 
+    5. 5秒経過したら、「●回押せました」とダイアログ表示して、初期状態に戻る -->
+
+<script>
+    let passSec = 5;   // 秒数カウント用変数
+    let clickCount = 0;  // クリックカウンター
+    let startCount = document.getElementById("startcount");  // スタートボタン
+    let defaultHTML
+
+    // 初期HTMLを保存
+    function saveDefaultHTML() {
+        defaultHTML = document.body.innerHTML;
+    }
+
+    // 初期HTMLの呼び出し
+    function settingDefaultHTML() {
+        document.body.innerHTML = defaultHTML;
+    }
+
+    // javascript部分の初期化
+    function clearJs() {
+        clearInterval( passageID );
+        passSec = 5;
+        clickCount = 0; 
+    }
+
+    // カウントを減らし、0になった時の処理を記述
+    function decrement() {
+        passSec --;
+        if(passSec === -1) {
+            alert( clickCount + "回押せたよ");
+            clearJs();
+            settingDefaultHTML();
+            
+        }
+    }
+ 
+    // 繰り返し処理の中身
+    function showPassage() {
+        decrement();
+        let msg = "残り" + passSec + "秒";   // 表示文作成
+        document.getElementById("SecondPassage").innerHTML = msg;   // 表示更新
+        
+    }
+    
+    // 繰り返し処理の開始
+    function startShowing() {
+        if(passSec === 5) {
+        passageID = setInterval('showPassage()',1000); // タイマーをセット(1000ms間隔)
+        }   
+    }
+    
+    // 繰り返し処理の中止
+    function stopShowing() {
+        clearInterval( passageID );   // タイマーのクリア
+    }
+
+     // クリックをカウントするカウンター
+    function clickCounter() {
+        clickCount ++; // カウント
+        let msg = clickCount + "回押したよ";
+        document.getElementById("CountPassage").innerHTML = msg;   // 表示更新
+    }
+
+
+</script>
+</body>
+</html>
